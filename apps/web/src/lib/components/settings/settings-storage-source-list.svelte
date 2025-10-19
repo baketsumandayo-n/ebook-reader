@@ -286,7 +286,7 @@
               <div
                 tabindex="0"
                 role="button"
-                title="Toggle source as sync target"
+                title="同期対象として切り替え"
                 class="mr-4"
                 class:opacity-50={!storageSourceIsSyncTarget}
                 on:click={() =>
@@ -298,7 +298,7 @@
               <div
                 tabindex="0"
                 role="button"
-                title="Toggle source as data source for this type"
+                title="この種類のデータソースとして切り替え"
                 class="mr-4"
                 class:opacity-50={!storageSourceIsSourceDefault}
                 on:click={() =>
@@ -313,7 +313,7 @@
               <div
                 tabindex="0"
                 role="button"
-                title="Delete source"
+                title="ソースを削除"
                 class:hidden={isDefault}
                 on:click={() =>
                   deleteStorageSource(

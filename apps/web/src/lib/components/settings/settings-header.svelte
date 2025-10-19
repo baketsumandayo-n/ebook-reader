@@ -10,15 +10,15 @@
 
   const settingItems = [
     {
-      label: 'Reader',
+      label: 'リーダー',
       icon: faBookOpenReader
     },
     {
-      label: 'Data',
+      label: 'データ',
       icon: faDatabase
     },
     {
-      label: 'Statistics',
+      label: '統計',
       icon: faClock
     }
   ];

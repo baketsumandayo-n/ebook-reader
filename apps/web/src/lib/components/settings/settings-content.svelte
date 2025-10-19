@@ -195,130 +195,130 @@
   const optionsForFuriganaStyle: ToggleOption<FuriganaStyle>[] = [
     {
       id: FuriganaStyle.Hide,
-      text: 'Hide'
+      text: '非表示'
     },
     {
       id: FuriganaStyle.Partial,
-      text: 'Partial'
+      text: '部分表示'
     },
     {
       id: FuriganaStyle.Toggle,
-      text: 'Toggle'
+      text: '切り替え'
     },
     {
       id: FuriganaStyle.Full,
-      text: 'Full'
+      text: '常に表示'
     }
   ];
 
   const optionsForWritingMode: ToggleOption<WritingMode>[] = [
     {
       id: 'horizontal-tb',
-      text: 'Horizontal'
+      text: '横書き'
     },
     {
       id: 'vertical-rl',
-      text: 'Vertical'
+      text: '縦書き'
     }
   ];
 
   const optionsForTextMarginMode: ToggleOption<TextMarginMode>[] = [
     {
       id: 'auto',
-      text: 'Auto'
+      text: '自動'
     },
     {
       id: 'manual',
-      text: 'Manual'
+      text: '手動'
     }
   ];
 
   const optionsForViewMode: ToggleOption<ViewMode>[] = [
     {
       id: ViewMode.Continuous,
-      text: 'Continuous'
+      text: '連続スクロール'
     },
     {
       id: ViewMode.Paginated,
-      text: 'Paginated'
+      text: 'ページごと'
     }
   ];
 
   const optionsForBlurMode: ToggleOption<BlurMode>[] = [
     {
       id: BlurMode.ALL,
-      text: 'All'
+      text: 'すべて'
     },
     {
       id: BlurMode.AFTER_TOC,
-      text: 'After ToC'
+      text: '目次以降'
     }
   ];
 
   const optionsForAutoReplicationType: ToggleOption<AutoReplicationType>[] = [
     {
       id: AutoReplicationType.Off,
-      text: 'Off'
+      text: 'オフ'
     },
     {
       id: AutoReplicationType.Up,
-      text: 'Up'
+      text: 'アップロード'
     },
     {
       id: AutoReplicationType.Down,
-      text: 'Down'
+      text: 'ダウンロード'
     },
     {
       id: AutoReplicationType.All,
-      text: 'All'
+      text: '双方向'
     }
   ];
 
   const optionsForReplicationSaveBehavior: ToggleOption<ReplicationSaveBehavior>[] = [
     {
       id: ReplicationSaveBehavior.NewOnly,
-      text: 'New Only'
+      text: '新規のみ'
     },
     {
       id: ReplicationSaveBehavior.Overwrite,
-      text: 'Overwrite'
+      text: '上書き'
     }
   ];
 
   const optionsForTrackerAutoPause: ToggleOption<TrackerAutoPause>[] = [
     {
       id: TrackerAutoPause.OFF,
-      text: 'Off'
+      text: 'オフ'
     },
     {
       id: TrackerAutoPause.MODERATE,
-      text: 'Moderate'
+      text: '中程度'
     },
     {
       id: TrackerAutoPause.STRICT,
-      text: 'Strict'
+      text: '厳格'
     }
   ];
 
   const optionsForTrackerSkipThresholdAction: ToggleOption<TrackerSkipThresholdAction>[] = [
     {
       id: TrackerSkipThresholdAction.IGNORE,
-      text: 'Ignore'
+      text: '無視'
     },
     {
       id: TrackerSkipThresholdAction.PAUSE,
-      text: 'Pause Tracker'
+      text: 'トラッカー停止'
     }
   ];
 
   const optionsForMergeMode: ToggleOption<MergeMode>[] = [
     {
       id: MergeMode.MERGE,
-      text: 'Merge'
+      text: 'マージ'
     },
     {
       id: MergeMode.REPLACE,
-      text: 'Replace'
+      text: '置き換え'
     }
   ];
 
@@ -349,55 +349,54 @@
     $textMarginValue$ = 0;
   }
 
-  $: autoBookmarkTooltip = `If enabled sets a bookmark after ${autoBookmarkTime} seconds without scrolling/page change`;
+  $: autoBookmarkTooltip = `${autoBookmarkTime} 秒間スクロール／ページ移動が無い場合に自動でブックマークを作成します`;
   $: wakeLockSupported = browser && 'wakeLock' in navigator;
   $: verticalMode = writingMode === 'vertical-rl';
   $: fontCacheSupported = browser && 'caches' in window;
   $: switch (furiganaStyle) {
     case FuriganaStyle.Hide:
-      furiganaStyleTooltip = 'Always hidden';
+      furiganaStyleTooltip = '常に非表示にします';
       break;
     case FuriganaStyle.Toggle:
-      furiganaStyleTooltip = 'Hidden by default, can be toggled on click';
+      furiganaStyleTooltip = '通常は非表示で、クリックすると表示を切り替えられます';
       break;
     case FuriganaStyle.Full:
-      furiganaStyleTooltip = 'Hidden by default, show on hover or click';
+      furiganaStyleTooltip = '通常は非表示で、ホバーまたはクリックで表示します';
       break;
     default:
-      furiganaStyleTooltip = 'Display furigana as grayed out text';
+      furiganaStyleTooltip = '薄い文字色でふりがなを表示します';
       break;
   }
   $: avoidPageBreakTooltip = avoidPageBreak
-    ? 'Avoids breaking words/sentences into different pages'
-    : 'Allow words/sentences to break into different pages';
+    ? '単語や文章がページをまたがらないようにします'
+    : '単語や文章がページをまたいでも構いません';
   $: persistentStorageTooltip = persistentStorage
-    ? 'Reader uses higher storage limit for local data'
-    : 'Uses lower temporary storage for local data.\nMay require bookmark or notification permissions for enablement';
+    ? 'ローカルデータに対して大きな保存領域を利用します'
+    : 'ローカルデータを一時ストレージに保存します。\n有効化にはブックマークまたは通知権限が必要な場合があります';
   $: cacheStorageDataTooltip = cacheStorageData
-    ? 'Storage data is cached. Saves network traffic/latency but requires to reload current/open a new tab to retrieve data changes'
-    : 'Storage data is refetched on every action. May consume more network traffic/latency but ensures current data';
+    ? 'ストレージデータをキャッシュします。通信量・待ち時間を抑えられますが、変更を反映するには再読み込みが必要です'
+    : '操作のたびにデータを再取得します。通信量は増えますが、常に最新のデータになります';
   $: replicationSaveBehaviorTooltip =
     replicationSaveBehavior === ReplicationSaveBehavior.Overwrite
       ? 'Data will always be overwritten'
       : 'Data will only be written if none exist on target, no time data is present or if target data is older';
   $: switch (autoReplication) {
     case AutoReplicationType.Up:
-      autoReplicationTypeTooltip =
-        'Updated data will be exported to sync target when reading once per minute';
+      autoReplicationTypeTooltip = '読書中（1 分ごと）に更新データを同期先へアップロードします';
       break;
     case AutoReplicationType.Down:
-      autoReplicationTypeTooltip = 'Data will be imported from sync target when opening a book';
+      autoReplicationTypeTooltip = '本を開いたタイミングで同期先からデータを取り込みます';
       break;
     case AutoReplicationType.All:
-      autoReplicationTypeTooltip = 'Data will be synced in both directions';
+      autoReplicationTypeTooltip = '同期先とローカルを双方向に同期します';
       break;
     default:
-      autoReplicationTypeTooltip = 'No automatic import/export of data';
+      autoReplicationTypeTooltip = '自動インポート／エクスポートは行いません';
       break;
   }
   $: showExternalPlaceholderToolTip = showExternalPlaceholder
-    ? 'Placeholder data for external books is shown in the browser source manager'
-    : 'Placeholder data for external books is hidden';
+    ? '外部書籍のプレースホルダーをブラウザソースに表示します'
+    : '外部書籍のプレースホルダーを非表示にします';
 
   $: startOfDayHours = `${`${startDayHoursForTracker}`.padStart(2, '0')}:00`;
 
@@ -405,15 +404,15 @@
 
   $: switch (trackerAutoPause) {
     case TrackerAutoPause.OFF:
-      trackerAutoPauseTooltip = 'Tracker does not auto pause except for certain reader events';
+      trackerAutoPauseTooltip = '一部の操作を除き、自動的に一時停止しません';
       break;
     case TrackerAutoPause.STRICT:
       trackerAutoPauseTooltip =
-        'Tracker will auto pause on certain reader events and any kind of site focus loss (e. g. dictionary popup)';
+        '特定の操作やフォーカス喪失（辞書ポップアップなど）で自動的に一時停止します';
       break;
     default:
       trackerAutoPauseTooltip =
-        'Tracker will auto pause on certain reader events and when the reader tab loses focus';
+        '特定の操作と、リーダータブのフォーカスが外れたときに自動的に一時停止します';
       break;
   }
 
@@ -433,7 +432,7 @@
 <div class="grid grid-cols-1 items-center sm:grid-cols-2 sm:gap-6 lg:md:gap-8 lg:grid-cols-3">
   {#if activeSettings === 'Reader'}
     <div class="lg:col-span-2">
-      <SettingsItemGroup title="Theme">
+      <SettingsItemGroup title="テーマ">
         <ButtonToggleGroup
           options={optionsForTheme}
           bind:selectedOptionId={selectedTheme}
@@ -469,11 +468,11 @@
       </SettingsItemGroup>
     </div>
     <div class="h-full">
-      <SettingsItemGroup title="View mode">
+      <SettingsItemGroup title="表示モード">
         <ButtonToggleGroup options={optionsForViewMode} bind:selectedOptionId={viewMode} />
       </SettingsItemGroup>
     </div>
-    <SettingsItemGroup title="Font family (Group 1)">
+    <SettingsItemGroup title="フォント（グループ1）">
       <div slot="header" class="flex items-center">
         <SettingsFontSelector
           availableFonts={[
@@ -491,7 +490,7 @@
           <div
             tabindex="0"
             role="button"
-            title="Open Custom Font Dialog"
+            title="カスタムフォントを追加"
             on:click={() =>
               dialogManager.dialogs$.next([
                 {
@@ -512,7 +511,7 @@
         bind:value={fontFamilyGroupOne}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Font family (Group 2)">
+    <SettingsItemGroup title="フォント（グループ2）">
       <div slot="header" class="flex items-center">
         <SettingsFontSelector
           availableFonts={[LocalFont.NOTOSANSJP, LocalFont.KZUDGOTHIC, LocalFont.SANSSERIF]}
@@ -542,10 +541,10 @@
         bind:value={fontFamilyGroupTwo}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Font size">
+    <SettingsItemGroup title="フォントサイズ">
       <input type="number" class={inputClasses} step="1" min="1" bind:value={fontSize} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Line Height">
+    <SettingsItemGroup title="行の高さ">
       <input
         type="number"
         class={inputClasses}
@@ -559,10 +558,7 @@
         }}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup
-      title="Paragraph Indentation"
-      tooltip="# of rem added as text indentation of new paragraphs"
-    >
+    <SettingsItemGroup title="段落の字下げ" tooltip="新しい段落に追加する字下げ量（rem）">
       <input
         type="number"
         class={inputClasses}
@@ -579,7 +575,7 @@
       />
     </SettingsItemGroup>
     {#if textMarginMode === 'manual'}
-      <SettingsItemGroup title="Paragraph Margins" tooltip="# of rem added as margin to paragraphs">
+      <SettingsItemGroup title="段落マージン" tooltip="段落に追加するマージン量（rem）">
         <input
           type="number"
           class={inputClasses}
@@ -596,9 +592,7 @@
         />
       </SettingsItemGroup>
     {/if}
-    <SettingsItemGroup
-      title={verticalMode ? 'Reader Left/right margin' : 'Reader Top/bottom margin'}
-    >
+    <SettingsItemGroup title={verticalMode ? 'リーダー左右の余白' : 'リーダー上下の余白'}>
       <SettingsDimensionPopover
         slot="header"
         isFirstDimension
@@ -613,7 +607,7 @@
         bind:value={firstDimensionMargin}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup title={verticalMode ? 'Reader Max height' : 'Reader Max width'}>
+    <SettingsItemGroup title={verticalMode ? '最大高さ' : '最大幅'}>
       <SettingsDimensionPopover
         slot="header"
         isVertical={verticalMode}
@@ -627,10 +621,7 @@
         bind:value={secondDimensionMaxValue}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup
-      title="Swipe Threshold"
-      tooltip={'Distance which you need to swipe in order trigger a navigation'}
-    >
+    <SettingsItemGroup title="スワイプ閾値" tooltip={'ページ送りに必要なスワイプ距離を指定します'}>
       <input
         type="number"
         step="1"
@@ -645,7 +636,10 @@
       />
     </SettingsItemGroup>
     {#if autoBookmark}
-      <SettingsItemGroup title="Auto Bookmark Time" tooltip={'Time in s for Auto Bookmark'}>
+      <SettingsItemGroup
+        title="自動ブックマークまでの時間"
+        tooltip={'自動ブックマークを付けるまでの秒数'}
+      >
         <input
           type="number"
           step="1"
@@ -660,12 +654,12 @@
         />
       </SettingsItemGroup>
     {/if}
-    <SettingsItemGroup title="Writing mode">
+    <SettingsItemGroup title="書字方向">
       <ButtonToggleGroup options={optionsForWritingMode} bind:selectedOptionId={writingMode} />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Prioritize Reader Styles"
-      tooltip={'When enabled the "important" declaration is added to certain rules like margins or justification which makes it more likely to be applied in case of conflicting book styles'}
+      title="リーダーのスタイルを優先"
+      tooltip={'有効にするとマージンや文字揃えなど一部のスタイルに!importantを付与し、書籍側スタイルより優先します'}
     >
       <ButtonToggleGroup
         options={optionsForToggle}
@@ -673,8 +667,8 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Enable Text Justification"
-      tooltip={'When enabled the reader adds styles to justify text content of paragraphs'}
+      title="文字両端揃えを有効化"
+      tooltip={'有効にすると段落テキストを両端揃えで表示します'}
     >
       <ButtonToggleGroup
         options={optionsForToggle}
@@ -682,14 +676,14 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Enable Pretty Text Wrap"
-      tooltip={'When enabled the reader adds the pretty text wrap style to supported browsers'}
+      title="きれいな禁則処理を有効化"
+      tooltip={'対応ブラウザで禁則処理（pretty text wrap）を有効にします'}
     >
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={enableTextWrapPretty} />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Paragraph Margin Mode"
-      tooltip={'When set to manual it allows to specify a margin value which should be applied to paragraphs'}
+      title="段落マージンモード"
+      tooltip={'手動にすると段落に適用するマージン値を指定できます'}
     >
       <ButtonToggleGroup
         options={optionsForTextMarginMode}
@@ -698,8 +692,8 @@
     </SettingsItemGroup>
     {#if wakeLockSupported}
       <SettingsItemGroup
-        title="Enable Screen Lock"
-        tooltip={'When enabled the reader site attempts to request a WakeLock that prevents device screens from dimming or locking'}
+        title="画面ロックを防止"
+        tooltip={'端末の画面が暗転・ロックしないようWakeLockを要求します'}
       >
         <ButtonToggleGroup
           options={optionsForToggle}
@@ -707,49 +701,49 @@
         />
       </SettingsItemGroup>
     {/if}
-    <SettingsItemGroup title="Show Character Counter">
+    <SettingsItemGroup title="文字数カウンターを表示">
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={showCharacterCounter} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Show Percentage">
+    <SettingsItemGroup title="進捗率を表示">
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={showPercentage} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Disable Wheel Navigation">
+    <SettingsItemGroup title="ホイールでページ送りしない">
       <ButtonToggleGroup
         options={optionsForToggle}
         bind:selectedOptionId={disableWheelNavigation}
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Close Confirmation"
-      tooltip={`When enabled asks for confirmation on closing/reloading a reader tab and unsaved changes were detected`}
+      title="閉じる前に確認"
+      tooltip={`有効にすると、未保存の変更がある状態でタブを閉じたり再読み込みする際に確認ダイアログを表示します`}
     >
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={confirmClose} />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Manual Bookmark"
-      tooltip={'If enabled current position will not be bookmarked when leaving the reader via menu elements'}
+      title="手動ブックマーク"
+      tooltip={'有効にするとメニュー操作で離脱しても現在位置を自動保存しません'}
     >
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={manualBookmark} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Auto Bookmark" tooltip={autoBookmarkTooltip}>
+    <SettingsItemGroup title="自動ブックマーク" tooltip={autoBookmarkTooltip}>
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={autoBookmark} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Blur image">
+    <SettingsItemGroup title="画像をぼかす">
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={blurImage} />
     </SettingsItemGroup>
     {#if blurImage}
       <SettingsItemGroup
-        title="Blur Mode"
-        tooltip="Determines if all or only images after the table of contents will be blurred"
+        title="ぼかし対象"
+        tooltip="全画像をぼかすか、目次以降の画像のみぼかすかを切り替えます"
       >
         <ButtonToggleGroup options={optionsForBlurMode} bind:selectedOptionId={blurImageMode} />
       </SettingsItemGroup>
     {/if}
-    <SettingsItemGroup title="Hide furigana">
+    <SettingsItemGroup title="ふりがなを隠す">
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={hideFurigana} />
     </SettingsItemGroup>
     {#if hideFurigana}
-      <SettingsItemGroup title="Hide furigana style" tooltip={furiganaStyleTooltip}>
+      <SettingsItemGroup title="ふりがなの表示方法" tooltip={furiganaStyleTooltip}>
         <ButtonToggleGroup
           options={optionsForFuriganaStyle}
           bind:selectedOptionId={furiganaStyle}
@@ -758,8 +752,8 @@
     {/if}
     {#if statisticsEnabled}
       <SettingsItemGroup
-        title="Custom Point pauses Tracker"
-        tooltip={'When enabled the tracker will auto pause and unpause while setting a custom reading point'}
+        title="カスタム地点でトラッカーを一時停止"
+        tooltip={'有効にするとカスタム読書ポイント設定中は自動で一時停止／再開を切り替えます'}
       >
         <ButtonToggleGroup
           options={optionsForToggle}
@@ -769,8 +763,8 @@
     {/if}
     {#if viewMode === ViewMode.Continuous}
       <SettingsItemGroup
-        title="Custom Reading Point"
-        tooltip={'Allows to set a persistent custom point in the reader from which the current progress and bookmark is calculated when enabled'}
+        title="カスタム読書ポイント"
+        tooltip={'現在位置やブックマークを計算する基準を任意の位置に固定できます'}
       >
         <div class="flex items-center">
           <ButtonToggleGroup
@@ -788,24 +782,24 @@
               }}
               on:keyup={dummyFn}
             >
-              Reset Points
+              リセット
             </div>
           {/if}
         </div>
       </SettingsItemGroup>
-      <SettingsItemGroup title="Auto position on resize">
+      <SettingsItemGroup title="サイズ変更時に自動調整">
         <ButtonToggleGroup
           options={optionsForToggle}
           bind:selectedOptionId={autoPositionOnResize}
         />
       </SettingsItemGroup>
     {:else}
-      <SettingsItemGroup title="Avoid Page Break" tooltip={avoidPageBreakTooltip}>
+      <SettingsItemGroup title="ページ分割を避ける" tooltip={avoidPageBreakTooltip}>
         <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={avoidPageBreak} />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Selection to Bookmark"
-        tooltip={'When enabled bookmarks will be placed to a near paragraph of current/previous selected text instead of page start'}
+        title="選択範囲をブックマーク"
+        tooltip={'有効にするとページ先頭ではなく直近の選択した段落にブックマークを設定します'}
       >
         <ButtonToggleGroup
           options={optionsForToggle}
@@ -813,19 +807,19 @@
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Tap to Flip"
-        tooltip="Reserves small margins on the left and right on which you can tap to turn pages"
+        title="タップでページ送り"
+        tooltip="左右の端にタップ領域を確保し、タップでページをめくれるようにします"
       >
         <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={enableTapEdgeToFlip} />
       </SettingsItemGroup>
       {#if !verticalMode}
-        <SettingsItemGroup title="Page Columns" tooltip="# of text columns rendered">
+        <SettingsItemGroup title="列数" tooltip="表示する列数を指定します">
           <input type="number" class={inputClasses} step="1" min="0" bind:value={pageColumns} />
         </SettingsItemGroup>
       {/if}
     {/if}
   {:else if activeSettings === 'Data'}
-    <SettingsItemGroup title="Persistent storage" tooltip={persistentStorageTooltip}>
+    <SettingsItemGroup title="永続ストレージ" tooltip={persistentStorageTooltip}>
       <div class="flex items-center">
         <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={persistentStorage} />
         {#if storageQuota}
@@ -833,22 +827,22 @@
         {/if}
       </div>
     </SettingsItemGroup>
-    <SettingsItemGroup title="Cache Data" tooltip={cacheStorageDataTooltip}>
+    <SettingsItemGroup title="データをキャッシュ" tooltip={cacheStorageDataTooltip}>
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={cacheStorageData} />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Auto Import/Export" tooltip={autoReplicationTypeTooltip}>
+    <SettingsItemGroup title="自動インポート／エクスポート" tooltip={autoReplicationTypeTooltip}>
       <ButtonToggleGroup
         options={optionsForAutoReplicationType}
         bind:selectedOptionId={autoReplication}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Import/Export Behavior" tooltip={replicationSaveBehaviorTooltip}>
+    <SettingsItemGroup title="同期時の保存方法" tooltip={replicationSaveBehaviorTooltip}>
       <ButtonToggleGroup
         options={optionsForReplicationSaveBehavior}
         bind:selectedOptionId={replicationSaveBehavior}
       />
     </SettingsItemGroup>
-    <SettingsItemGroup title="Show Placeholder" tooltip={showExternalPlaceholderToolTip}>
+    <SettingsItemGroup title="プレースホルダーを表示" tooltip={showExternalPlaceholderToolTip}>
       <ButtonToggleGroup
         options={optionsForToggle}
         bind:selectedOptionId={showExternalPlaceholder}
@@ -857,8 +851,8 @@
     <SettingsStorageSourceList storageSources={$storageSources$} />
   {:else}
     <SettingsItemGroup
-      title="Keep Local Data on Deletion"
-      tooltip={'Determines if local statistics will be deleted or not when removing a local book copy'}
+      title="削除時もローカルデータを保持"
+      tooltip={'ローカルの書籍を削除した際に統計データを残すかどうかを切り替えます'}
     >
       <div class="flex items-center">
         <ButtonToggleGroup
@@ -878,8 +872,8 @@
                   {
                     component: MessageDialog,
                     props: {
-                      title: 'Error',
-                      message: `Error clearing Zombie Statistics: ${message}`
+                      title: 'エラー',
+                      message: `統計データのクリーンアップに失敗しました: ${message}`
                     }
                   }
                 ])
@@ -888,13 +882,13 @@
           }}
           on:keyup={() => {}}
         >
-          Clear Zombie Statistics
+          統計データを整理
         </div>
       </div>
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Overwrite Book Completion"
-      tooltip={`Determines if only the first Book Completion will be tracked or if it always updates to the latest one`}
+      title="読了日を上書き"
+      tooltip={`最初の読了日だけを保持するか、常に最新の読了日に更新するかを切り替えます`}
     >
       <ButtonToggleGroup
         options={optionsForToggle}
@@ -902,8 +896,8 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title={`Start Day Hours: ${startOfDayHours}`}
-      tooltip={'Determines at which time a new day starts.\nData before this point will be counted towards the previous day'}
+      title={`日付リセット時刻: ${startOfDayHours}`}
+      tooltip={'この時間を境に新しい日として集計します。\n指定時刻より前のデータは前日に含まれます'}
     >
       <input
         type="range"
@@ -915,8 +909,8 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Statistics Merge"
-      tooltip={`Determines if statistics will be merged entry by entry or replaced completely on a sync`}
+      title="統計のマージ方法"
+      tooltip={`同期時に統計を項目ごとにマージするか、完全に置き換えるかを切り替えます`}
     >
       <ButtonToggleGroup
         options={optionsForMergeMode}
@@ -924,8 +918,8 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Reading Goals Merge"
-      tooltip={`Determines if reading goals will be merged entry by entry or replaced completely on a sync`}
+      title="読書目標のマージ方法"
+      tooltip={`同期時に読書目標を項目ごとにマージするか、完全に置き換えるかを切り替えます`}
     >
       <ButtonToggleGroup
         options={optionsForMergeMode}
@@ -933,27 +927,27 @@
       />
     </SettingsItemGroup>
     <SettingsItemGroup
-      title="Enable Statistics"
-      tooltip="Enables the tracker icon in the bottom left corner of the reader which you need to use to start tracking your reading session"
+      title="統計を有効化"
+      tooltip="画面左下にトラッカーアイコンを表示し、読書セッションの記録を開始できるようにします"
     >
       <ButtonToggleGroup options={optionsForToggle} bind:selectedOptionId={statisticsEnabled} />
     </SettingsItemGroup>
     {#if statisticsEnabled}
-      <SettingsItemGroup title="Tracker Auto Pause" tooltip={trackerAutoPauseTooltip}>
+      <SettingsItemGroup title="トラッカー自動一時停止" tooltip={trackerAutoPauseTooltip}>
         <ButtonToggleGroup
           options={optionsForTrackerAutoPause}
           bind:selectedOptionId={trackerAutoPause}
         />
       </SettingsItemGroup>
-      <SettingsItemGroup title="Open Tracker on Completion">
+      <SettingsItemGroup title="読了時にトラッカーを開く">
         <ButtonToggleGroup
           options={optionsForToggle}
           bind:selectedOptionId={openTrackerOnCompletion}
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Update on Completion"
-        tooltip={`Determines if the missing amount of characters between the current position and the book total will be added to the statistics or not`}
+        title="読了時に統計を更新"
+        tooltip={`読了時に、残り文字数の差分を統計へ加算するかどうかを選択します`}
       >
         <ButtonToggleGroup
           options={optionsForToggle}
@@ -961,8 +955,8 @@
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Autostart tracker (sec)"
-        tooltip={'Time in seconds without a change to the character count after which the tracker will initially auto start (0 = disabled, higher value recommended to avoid racing conditions)'}
+        title="自動開始までの秒数"
+        tooltip={'文字数が変化しない状態が指定秒数続くとトラッカーを自動開始します（0で無効／競合回避のため大きめ推奨）'}
       >
         <input
           type="number"
@@ -980,8 +974,8 @@
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Idle Time (min)"
-        tooltip={'Time in minutes after which the tracker will auto pause without page interaction (0 = disabled, max 12h)'}
+        title="アイドル時間（分）"
+        tooltip={'ページ操作が無い状態が指定分続くと自動一時停止します（0で無効／最大12時間）'}
       >
         <input
           type="number"
@@ -1001,8 +995,8 @@
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Forward Skip Threshold"
-        tooltip={'Amount of positive characters passed between a tick after which a threshold action is triggered (0 = disabled)'}
+        title="順方向スキップ閾値"
+        tooltip={'直前より増加した文字数がこの値を超えると閾値アクションを実行します（0で無効）'}
       >
         <input
           type="number"
@@ -1020,8 +1014,8 @@
         />
       </SettingsItemGroup>
       <SettingsItemGroup
-        title="Backward Skip Threshold"
-        tooltip={'Amount of negative characters passed between a tick after which a threshold action is triggered (0 = disabled)'}
+        title="逆方向スキップ閾値"
+        tooltip={'直前より減少した文字数がこの値を超えると閾値アクションを実行します（0で無効）'}
       >
         <input
           type="number"
@@ -1041,8 +1035,8 @@
       </SettingsItemGroup>
       {#if trackerForwardSkipThreshold || trackerBackwardSkipThreshold}
         <SettingsItemGroup
-          title="Threshold Action"
-          tooltip={`Determines what action will be executed in case a skip threshold was triggered`}
+          title="閾値アクション"
+          tooltip={`スキップ閾値が発動した際に実行するアクションを選択します`}
         >
           <ButtonToggleGroup
             options={optionsForTrackerSkipThresholdAction}
@@ -1052,8 +1046,8 @@
       {/if}
       {#if trackerAutoPause !== TrackerAutoPause.OFF}
         <SettingsItemGroup
-          title="Dictionary Detection"
-          tooltip={`If enabled auto pause is skipped if open yomitan/jpdb-browser-reader was detected - yomitan requires disabled 'Secure Container' settings`}
+          title="辞書検出"
+          tooltip={`有効にすると Yomitan や jpdb-browser-reader のウィンドウが開いていても自動一時停止をスキップします（Yomitan では「Secure Container」を無効にする必要があります）`}
         >
           <ButtonToggleGroup
             options={optionsForToggle}
@@ -1063,8 +1057,8 @@
       {/if}
       {#if trackerIdleTime > 0}
         <SettingsItemGroup
-          title="Rollback Statistics on Idle"
-          tooltip={`If enabled attempts to rollback statistics by subtracting the idled time value back from the session`}
+          title="アイドルで統計を巻き戻す"
+          tooltip={`有効にするとアイドル時間分を統計から差し引いて巻き戻しを試みます`}
         >
           <ButtonToggleGroup
             options={optionsForToggle}

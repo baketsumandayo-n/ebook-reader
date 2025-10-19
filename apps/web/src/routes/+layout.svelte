@@ -3,21 +3,26 @@
   import { page } from '$app/stores';
   import DomainHint from '$lib/components/domain-hint.svelte';
   import { basePath, clearConsoleOnReload } from '$lib/data/env';
+  import { applyJapaneseUI } from '$lib/data/locale-ja';
   import { dialogManager, type Dialog } from '$lib/data/dialog-manager';
   import { userFontsCacheName, type UserFont } from '$lib/data/fonts';
   import { fontFamilyGroupOne$, isOnline$, userFonts$ } from '$lib/data/store';
   import { dummyFn, isMobile, isMobile$ } from '$lib/functions/utils';
   import { MetaTags } from 'svelte-meta-tags';
   import '../app.scss';
+  import { onDestroy } from 'svelte';
 
   let path = '';
   let dialogs: Dialog[] = [];
   let clickOnCloseDisabled = false;
   let zIndex = '';
+  let canonicalBase = basePath;
+  let translationObserver: MutationObserver | undefined;
 
   $: if (browser) {
     isMobile$.next(isMobile(window));
     addUserFonts($userFonts$);
+    queueMicrotask(() => applyJapaneseUI());
   }
 
   if (clearConsoleOnReload && import.meta.hot) {
@@ -81,7 +86,20 @@
     dialogs = d;
   });
 
-  page.subscribe((p) => (path = p.url.pathname));
+  page.subscribe((p) => {
+    path = p.url.pathname;
+    canonicalBase = basePath || p.url.origin;
+  });
+
+  if (browser) {
+    document.documentElement.lang = 'ja';
+    const apply = () => applyJapaneseUI();
+    apply();
+    translationObserver = new MutationObserver(() => apply());
+    translationObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  onDestroy(() => translationObserver?.disconnect());
 </script>
 
 <svelte:window bind:online={$isOnline$} />
@@ -89,12 +107,14 @@
 <MetaTags
   title="ッツ Ebook Reader"
   description="Online e-book reader that supports dictionary extensions like Yomitan"
-  canonical="{basePath}{path !== '/' ? path : ''}"
+  canonical={`${canonicalBase}${path !== '/' ? path : ''}`}
   openGraph={{
     type: 'website',
     images: [
       {
-        url: `${basePath}/icons/regular-icon@512x512.png`,
+        url: canonicalBase
+          ? `${canonicalBase}/icons/regular-icon@512x512.png`
+          : '/icons/regular-icon@512x512.png',
         width: 512,
         height: 512
       }

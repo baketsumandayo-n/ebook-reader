@@ -22,6 +22,19 @@ An online e-book reader that supports dictionary extensions like Yomitan, which 
 - [x] Data import/export via local and external sources
 - [x] Installation and offline capabilities
 
+# Offline Usage
+
+1. Install dependencies with `pnpm install`.
+2. (Optional) Create `apps/web/.env.local` and set variables such as `VITE_BASE_PATH=http://localhost:4173` when you want canonical links to point at your local server. Leaving it empty keeps everything relative to the current origin.
+3. Build the static bundle via `pnpm build`.
+4. Serve the generated files locally (e.g. `pnpm preview --host` which runs on `http://localhost:4173`). Use a web server instead of opening the files directly so that the Service Worker can register.
+5. Visit the local URL once while online; the Service Worker will cache all assets and the reader will continue to work offline. You can then install it as a PWA from your browser for one-click offline access.
+6. Keep the storage source set to `ブラウザ` or `ファイルシステム` in the settings to ensure all book data stays on your machine. Google Drive / OneDrive options are hidden unless you explicitly configure their environment variables.
+
+# Quick Start (Windows)
+
+- 同梱の `start-reader.bat` をダブルクリックすると、依存関係のインストール→ビルド→ローカルプレビュー起動まで自動で実行され、ブラウザから `http://localhost:4173` にアクセスできます。
+
 # Usage
 
 The first time you enter the page (or have no files loaded yet) you will need to select the books you want to read from your device.

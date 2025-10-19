@@ -55,12 +55,15 @@
     (passwordManagerAvailable && configuredStoredInManager) || false;
   let storageSourceEncryptionDisabled = configuredEncryptionDisabled || false;
   let storageSourceTypes = [
-    { key: StorageKey.GDRIVE, label: 'GDrive' },
+    { key: StorageKey.GDRIVE, label: 'Google Drive' },
     { key: StorageKey.ONEDRIVE, label: 'OneDrive' }
   ];
 
   $: if (browser && 'showDirectoryPicker' in window) {
-    storageSourceTypes = [...storageSourceTypes, { key: StorageKey.FS, label: 'Filesystem' }];
+    storageSourceTypes = [
+      ...storageSourceTypes,
+      { key: StorageKey.FS, label: 'ローカルフォルダー' }
+    ];
   }
 
   $: setInitialPassword(pwElm);
@@ -104,14 +107,14 @@
 
         if (elm === nameElm) {
           if (storageSourceType === StorageKey.FS && !directoryHandle) {
-            nameElm.setCustomValidity('You need to select a directory');
+            nameElm.setCustomValidity('フォルダーを選択してください');
             isValid = false;
           } else if (isAppDefault(storageSourceName)) {
-            nameElm.setCustomValidity('Please select a different name');
+            nameElm.setCustomValidity('別の名前を指定してください');
             isValid = false;
           }
         } else if (elm === pwConfirmElm && pwElm.value !== pwConfirmElm.value) {
-          pwConfirmElm.setCustomValidity('Password does not match');
+          pwConfirmElm.setCustomValidity('確認用パスワードが一致しません');
           isValid = false;
         }
 
@@ -141,13 +144,13 @@
             })
           )
           .catch(({ message }: any) => {
-            throw new Error(`Failed to store Password: ${message}`);
+            throw new Error(`パスワードを保存できませんでした: ${message}`);
           });
       }
 
       if (storageSourceType === StorageKey.FS) {
         if (!directoryHandle) {
-          throw new Error('Directory handle not defined');
+          throw new Error('フォルダーが選択されていません');
         }
 
         storageSourceData = { directoryHandle, fsPath: handleFsPath };
@@ -163,7 +166,7 @@
           configuredRemoteData?.refreshToken;
 
         if (willInvalidateToken && !$isOnline$) {
-          throw new Error('You need to be online in order to make this change to the credentials');
+          throw new Error('この設定を変更するにはオンライン接続が必要です');
         }
 
         if (storageSourceEncryptionDisabled) {
